@@ -14,7 +14,7 @@ class Templates extends MX_Controller {
     function index(){
 		 //$this->load->library('session');
 
-		echo "<h1>This is templates modules </h1>";
+		echo "<h1>This is templates modules  here i ready for the new changes</h1>";
 		// $this->public_view();
 	}
 
