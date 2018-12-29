@@ -15,23 +15,28 @@ class Templates extends MX_Controller {
 		 //$this->load->library('session');
 
 		echo "<h1>This is templates modules </h1>";
+		// $this->public_view();
 	}
 
 	function public_view($data)
 	{
-		$this->load->view('public_view',$data);
+		$this->load->view('public_view');
+		// echo "this is public view";
 	}
 
 
 	function public_jqm($data)
 	{
-		$this->load->view('public_jqm',$data);
+		$this->load->view('public_jqm');
 	}
 
 
 	function admin($data)
 	{
-		$this->load->view('admin',$data);
+		if(!isset($data['view_module'])){
+			$data['view_module'] = $this->uri->segment(1);
+		}
+	 	 $this->load->view('admin',$data);
 	}
     
 }
