@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Mdl_item_sizes extends CI_Model {
+class mdl_storecat_assign extends CI_Model {
 
     function __construct() {
         
@@ -8,7 +8,7 @@ class Mdl_item_sizes extends CI_Model {
 }
 
 function get_table() {
-    $table = "store_item_sizes";
+    $table = "store_cat_assign";
     return $table;
 }
 

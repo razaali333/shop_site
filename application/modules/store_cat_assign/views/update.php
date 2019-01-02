@@ -9,7 +9,7 @@
 <div class="row-fluid sortable">
 				<div class="box span12">
 					<div class="box-header" data-original-title>
-						<h2><i class="halflings-icon white edit"></i><span class="break"></span>New color Options</h2>
+						<h2><i class="halflings-icon white edit"></i><span class="break"></span>Existing Assign Category For this Item</h2>
 						<div class="box-icon">
 							
 							<a href="#" class="btn-minimize"><i class="halflings-icon white chevron-up"></i></a>
@@ -17,21 +17,31 @@
 						</div>
 					</div>
 					<div class="box-content">
-						<p>Submit New options are required. When you are finished adding new options Press 'Finished'</p>
-						<?php $form_location= base_url()."store_item_color/submit/".$update_id; ?>
+						<p>Choose a new category and Hit 'Submit'.</p>
+						<?php $form_location= base_url()."store_cat_assign/submit/".$item_id; ?>
 						<form class="form-horizontal" method="post" action="<?= $form_location ?>">
 						  <fieldset>
 							<div class="control-group">
 							  <label class="control-label" for="typeahead">New Options </label>
 							  <div class="controls">
-								<input type="text" class="span5" id="typeahead" name="color">
+								<?php 
+									
+								$dropdown_id=
+								array(
+	
+        									'class' => 'form-control'
+										);
+							echo form_dropdown('cat_id', $options,$cat_id,$dropdown_id);
+
+								 ?>
+								
 							  </div>
 							</div>
 							
 							<div class="form-actions">
 							  <button type="submit" class="btn btn-primary" name="submit" value="Submit">Submit</button>
 							  <button type="submit" class="btn" name="submit" value="Finished">Finished</button>
-							  <a href="<?php echo base_url() ?>store_items/create/<?=$update_id;?>" class="btn btn-warning pull-right">Back</a>
+							  <a href="<?php echo base_url() ?>store_items/create/<?=$item_id;?>" class="btn btn-warning pull-right">Back</a>
 							</div>
 						  </fieldset>
 						</form>   
@@ -56,21 +66,25 @@
 						<table class="table table-striped table-bordered bootstrap-datatable datatable">
 						  <thead>
 							  <tr>
-								  <th>Count</th>
-								  <th>Color</th>
+							  	  <th>Count</th>
+								  <th>Category Title</th>
 								  <th>Actions</th>
 							  </tr>
 						  </thead>   
 						  <tbody>
 							<?php 
 								$count=0;
+								$this->load->module('store_categories');
 							foreach($query->result() as $row){ 
 									$count++;
-									$delete_url=base_url()."store_item_color/delete/".$row->id;
+									$delete_url=base_url()."store_cat_assign/delete/".$row->id;
+									$parent_cat_title=$this->store_categories->_get_parent_cat_title($row->cat_id);
+									$cat_title=$this->store_categories->_get_cat_title($row->cat_id);
+									$long_cat_title=$parent_cat_title." > ".$cat_title;
 								?>
 							<tr> 
 								<td><?php echo $count ?></td>
-								<td class="center"><?php echo $row->color ?></td>
+								<td class="center"><?php echo $long_cat_title ?></td>
 								<td class="center">
 									<a href="<?= $delete_url;?>" class="btn btn-danger">
 										<i class="halflings-icon white trash"></i>

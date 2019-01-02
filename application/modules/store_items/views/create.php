@@ -16,16 +16,17 @@
 						</div>
 					</div>
 					<div class="box-content">
-						<?php if($big_pic==""){ ?>
-						<a href="<?=base_url()?>store_items/upload_image/<?= $update_id?>"><button type="button" class="btn btn-primary">Upload Item Image</button></a> 
-						<?php }
-						else{ ?>
-						  <a href="<?=base_url()?>store_items/delete_image/<?= $update_id?>"><button type="button" class="btn btn-warning">Delete Item Image</button></a> 
-						<?php } ?>
-						<a href="<?=base_url()?>store_item_color/update/<?= $update_id?>"><button type="button" class="btn btn-primary">Update Item Color</button></a>   
-						<a href="<?=base_url()?>store_item_sizes/update/<?=$update_id ?>"><button type="button" class="btn btn-primary">Update Item Sizes</button></a>   
-						<a href="<?=base_url()?>store_items/"><button type="button" class="btn btn-primary">Update Item categories</button></a>   
-						<a href="<?=base_url()?>store_items/"><button type="button" class="btn btn-danger">Delete Item</button></a>   
+		<?php if($big_pic==""){ ?>
+		<a href="<?=base_url()?>store_items/upload_image/<?= $update_id?>"><button type="button" class="btn btn-primary">Upload Item Image</button></a> 
+		<?php }
+		else{ ?>
+		  <a href="<?=base_url()?>store_items/delete_image/<?= $update_id?>"><button type="button" class="btn btn-warning">Delete Item Image</button></a> 
+		<?php } ?>
+		<a href="<?=base_url()?>store_item_color/update/<?= $update_id?>"><button type="button" class="btn btn-primary">Update Item Color</button></a>   
+		<a href="<?=base_url()?>store_item_sizes/update/<?=$update_id ?>"><button type="button" class="btn btn-primary">Update Item Sizes</button></a>   
+		<a href="<?=base_url()?>store_cat_assign/update/<?=$update_id?>"><button type="button" class="btn btn-primary">Update Item categories</button></a>   
+		<a href="<?=base_url()?>store_items/deleteconf/<?= $update_id;?>"><button type="button" class="btn btn-danger">Delete Item</button></a>   
+		<a href="<?=base_url()?>store_items/view/<?= $update_id;?>"><button type="button" class="btn btn-default">View Item in shop</button></a>   
 
 					</div>
 				</div><!--/span-->

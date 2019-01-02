@@ -3,6 +3,11 @@
   <?php 
       $iems_store_url = base_url().'store_items/create';
   ?>
+  <?php if(isset($flash))
+	{
+			echo $flash;
+	} 
+	?>
    <p><a href="<?= $iems_store_url; ?>"><button type="button" class="btn btn-primary">Add New Item</button></a></p>
 
 <div class="row-fluid sortable">		
@@ -29,6 +34,7 @@
 						  <tbody>
 							<?php foreach($query->result() as $row){ 
 									$edit_item_url=base_url()."store_items/create/".$row->id;
+									$view_item_url=base_url()."store_items/view/".$row->id;
 									$status=$row->status;
 									if($status==1)
 									{
@@ -48,7 +54,7 @@
 									<span class="label label-<?= $status_label?>"><?= $status_disc?></span>
 								</td>
 								<td class="center">
-									<a class="btn btn-success" href="#">
+									<a class="btn btn-success" href="<?=$view_item_url?>">
 										<i class="halflings-icon white zoom-in"></i>  
 									</a>
 									<a class="btn btn-info" href="<?php echo $edit_item_url; ?>">

@@ -20,9 +20,13 @@ class Templates extends MX_Controller {
 
 	function public_view($data)
 	{
-		$this->load->view('public_view');
-		// echo "this is public view";
+		if(!isset($data['view_module'])){
+			$data['view_module'] = $this->uri->segment(1);
+		}
+	 	 $this->load->view('public_view',$data);
 	}
+		
+	
 
 
 	function public_jqm($data)

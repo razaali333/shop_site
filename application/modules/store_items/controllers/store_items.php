@@ -9,11 +9,29 @@
 			  $this->form_validation->CI =& $this;          
 			}
 
+			function view($update_id)
+			{
+				if(!is_numeric($update_id))
+				{
+					redirect('site_security/not_allowed');
+				}
+
+				//fetch data from database
+				$data=$this->get_data_from_db($update_id);
+                $data['flash']=$this->session->flashdata('item');	
+				//$data['view_module']="store_items";
+				$data['update_id']=$update_id;
+				$data['view_file'] = "view";
+				$this->load->module('templates');
+				$this->templates->public_view($data);
+			}
+
 			function manage()
 			{
 				$data['query']=$this->get('item_title');
-
+				$data['flash']=$this->session->flashdata('item');	
 				//$data['view_module']="store_items";
+				// $data['sort_this']=TRUE;
 				$data['view_file'] = "manage";
 				$this->load->module('templates');
 				$this->templates->admin($data);
@@ -33,6 +51,72 @@
 			$this->image_lib->resize();
 			}
 
+			// delete item 
+			function deleteconf($update_id)
+			{
+				if(!is_numeric($update_id))
+				{
+					redirect('site_security/not_allowed');
+				}
+
+				$data['headline']="Delete Item";
+                $data['flash']=$this->session->flashdata('item');	
+				//$data['view_module']="store_items";
+				$data['update_id']=$update_id;
+				$data['view_file'] = "deleteconf";
+				$this->load->module('templates');
+				$this->templates->admin($data);
+			}
+
+				function _process_delete($update_id)
+				{
+					//attempt to delete item color
+						$this->load->module('store_item_color');
+						$this->store_item_color->_delete_for_item($update_id);
+					//attempt to delete item sizes
+						$this->load->module('store_item_sizes');
+						$this->store_item_sizes->_delete_for_item($update_id);		
+					
+					$data=$this->get_data_from_db($update_id);
+				$big_pic=$data['big_pic'];
+				$small_pic=$data['small_pic'];
+                $big_pic_path  = './big_pics/'.$big_pic;
+                $small_pic_path  = './small_pics/'.$small_pic;
+
+                // removing the file from the folder
+                if(file_exists($big_pic_path))
+                {
+                	unlink($big_pic_path);
+                }
+                if(file_exists($small_pic_path))
+                {
+                	unlink($small_pic_path);
+                }
+
+					//delete the item record from the store items
+
+					$this->_delete($update_id);					
+				}
+
+				function delete($update_id)
+				{
+					if(!is_numeric($update_id))
+				{
+					redirect('site_security/not_allowed');
+				}
+					$submit=$this->input->post('submit',TRUE);
+					if($submit=="Cancel")
+					{
+						redirect('store_items/create'.$update_id);
+					}
+					elseif ($submit=="Yes- Delete Item") {
+						$this->_process_delete($update_id);
+					 $flash_msg=" Item Was successfully deleted";
+				$value='<div class="alert alert-success" role="alert">'.$flash_msg.'</div>';
+				$this->session->set_flashdata('item', $value);
+                redirect('store_items/manage');	
+					}
+				}
 				// delete image function
 			function delete_image($update_id)
 			{
@@ -190,6 +274,7 @@
 					}
 					else{
 						$data=$this->fetch_data_from_post();
+						// $data['big_pics']="";
 					}
 
 

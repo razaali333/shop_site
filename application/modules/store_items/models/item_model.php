@@ -57,7 +57,7 @@ function _update($id, $data){
 
 function _delete($id){
     $table = $this->get_table();
-    $this->db->where(‘id’, $id);
+    $this->db->where('id', $id);
     $this->db->delete($table);
 }
 

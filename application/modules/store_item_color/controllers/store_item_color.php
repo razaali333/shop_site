@@ -7,6 +7,12 @@ function __construct() {
 
 }
 
+function _delete_for_item($item_id)
+{
+    $mysql_query="delete from store_color where item_id=$item_id";
+    $query=$this->_custom_query($mysql_query);
+}
+
 function submit($update_id)
 {
 
@@ -35,6 +41,29 @@ function submit($update_id)
         }
     }
 }
+function delete($update_id)
+
+{
+    if(!is_numeric($update_id))
+        {
+            redirect('site_security/not_allowed');
+        }
+
+        //fetch the item id
+        $query=$this->get_where($update_id);
+        foreach($query->result() as $row)
+        {
+            $item_id=$row->item_id;
+        }
+        $this->_delete($update_id);
+         $flash_msg="Color option is successfully deleted";
+    $value='<div class="alert alert-success" role="alert">'.$flash_msg.'</div>';
+    $this->session->set_flashdata('item', $value);
+    redirect('store_item_color/update/'.$item_id);
+}
+
+
+
 
 function update($update_id)
             {
@@ -43,6 +72,10 @@ function update($update_id)
         {
             redirect('site_security/not_allowed');
         }
+
+        $data['query']=$this->get_where_custom('item_id',$update_id);
+        $data['num_rows']=$data['query']->num_rows();
+       
         $this->load->library('session');
         $update_id=$this->uri->segment(3);
         $data['headline']="Update Item color";   
