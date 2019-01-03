@@ -7,6 +7,7 @@ class Store_cat_assign extends MX_Controller
 }
 
 
+
 function update($item_id)
 {
          // get an array of sub categories on the size
