@@ -6,6 +6,21 @@ function __construct() {
     parent::__construct();
 }
 
+function _draw_top_nav()
+{
+
+   $mysql_query="select * from store_categories where parent_cat_id=0 order by priority";
+    $query=$this->_custom_query($mysql_query);
+    foreach($query->result() as $row)
+    {
+        $parent_categories[$row->id]=$row->cat_title;
+    }
+    // $data['parent_cat_id']=$parent_cat_id;
+    $data['parent_categories']=$parent_categories;
+    $this->load->view('top_nav',$data);
+
+}
+
 
 function _get_parent_cat_title($update_id)
 {
