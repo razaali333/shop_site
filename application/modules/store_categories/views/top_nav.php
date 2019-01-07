@@ -14,6 +14,7 @@
 		{
 			echo ' <li><a href="#">'.$row->cat_title.'</a></li>';
 		}
+		
 	 ?>
    
   </ul>
